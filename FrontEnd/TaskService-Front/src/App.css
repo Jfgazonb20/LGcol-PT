@@ -1,0 +1,236 @@
+/* Importar fuente elegante */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Estilos generales */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo para el contenedor principal */
+.App {
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Tema oscuro */
+.dark-mode {
+  background-color: #1c1e21;
+  color: white;
+}
+
+/* Contenedor de tareas con efecto 3D */
+.task-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+
+/* Encabezado */
+.App-header {
+  background-color: #007bff;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más profunda */
+}
+
+/* Botón de cambio de tema */
+.theme-toggle-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle-btn:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+/* Botones de filtro */
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filter-btn {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.filter-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para el botón activo */
+.filter-btn.active {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(0, 123, 255, 0.7);
+  font-weight: bold;
+}
+
+.all-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.completed-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.pending-btn {
+  background-color: #ffc107;
+  color: black;
+}
+
+/* Formulario */
+.task-form {
+  width: 100%;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border: 4px solid #ccc;
+  transition: transform 0.2s;
+}
+
+.task-form:hover {
+  transform: scale(1.02);
+}
+
+.task-form input {
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.dark-mode .task-form {
+  border: none;
+}
+
+/* Lista de tareas */
+.task-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+/* Tarjetas de tarea */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 10px 0;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, background-color 0.3s ease;
+  border: 4px solid #ccc;
+}
+
+.task-item.completed {
+  border: 4px solid #28a745 !important;
+}
+
+.task-item.pending {
+  border: 4px solid #ffc107 !important;
+}
+
+.task-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .task-item {
+  border: none;
+}
+
+/* Botón de completar con color dinámico */
+.complete-btn {
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.complete-btn.pending {
+  background-color: #ffc107;
+  color: black;
+}
+
+.complete-btn.completed {
+  background-color: #28a745;
+  color: white;
+}
+
+.complete-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .task-container {
+    padding: 15px;
+    max-width: 100%;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .task-item {
+    padding: 12px;
+    margin: 10px 0;
+  }
+
+  .task-form {
+    padding: 18px;
+  }
+
+  .theme-toggle-btn {
+    padding: 12px 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .task-container {
+    max-width: 500px; /* Tamaño más pequeño en pantallas grandes */
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra más grande para efecto 3D */
+  }
+}
