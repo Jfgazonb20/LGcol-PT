@@ -3,6 +3,7 @@ import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import './App.css';
 import { useTheme } from './ThemeContext';
+import taskService from './services/taskService'; // Importamos el servicio con Axios
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -14,11 +15,7 @@ function App() {
   const fetchTasks = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8081/tasks');
-      if (!response.ok) {
-        throw new Error('Error al obtener las tareas');
-      }
-      const data = await response.json();
+      const data = await taskService.getTasks(); // Usamos Axios desde taskService.js
       setTasks(data);
     } catch (error) {
       setError(error.message);
@@ -29,15 +26,7 @@ function App() {
 
   const createTask = async (task) => {
     try {
-      const response = await fetch('http://localhost:8081/tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(task),
-      });
-      if (!response.ok) {
-        throw new Error('Error al crear la tarea');
-      }
-      const newTask = await response.json();
+      const newTask = await taskService.createTask(task); // Usamos Axios
       setTasks([...tasks, newTask]);
     } catch (error) {
       setError(error.message);
@@ -46,15 +35,7 @@ function App() {
 
   const updateTask = async (id, updatedTask) => {
     try {
-      const response = await fetch(`http://localhost:8081/tasks/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedTask),
-      });
-      if (!response.ok) {
-        throw new Error('Error al actualizar la tarea');
-      }
-      const updatedTaskData = await response.json();
+      const updatedTaskData = await taskService.updateTask(id, updatedTask); // Usamos Axios
       setTasks(tasks.map(task => (task.id === id ? updatedTaskData : task)));
     } catch (error) {
       setError(error.message);
@@ -63,10 +44,7 @@ function App() {
 
   const deleteTask = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8081/tasks/${id}`, { method: 'DELETE' });
-      if (!response.ok) {
-        throw new Error('Error al eliminar la tarea');
-      }
+      await taskService.deleteTask(id); // Usamos Axios
       setTasks(tasks.filter(task => task.id !== id));
     } catch (error) {
       setError(error.message);
@@ -77,7 +55,9 @@ function App() {
     setTasks(newOrder);
   };
 
-  useEffect(() => { fetchTasks(); }, []);
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   const filteredTasks = tasks.filter(task => {
     if (filter === 'completed') return task.completed;
@@ -86,30 +66,30 @@ function App() {
   });
 
   return (
-    <div className={`App ${theme === 'dark' ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
-      <div className="container py-5">
-        <h1 className="text-center mb-4">Lista de Tareas</h1>
-        {error && <p className="text-danger">{error}</p>}
-        {loading ? (
-          <p>Cargando...</p>
-        ) : (
-          <>
-            <button onClick={toggleTheme} className="btn btn-secondary mb-3">
-              Cambiar a {theme === 'dark' ? 'Claro' : 'Oscuro'}
-            </button>
+      <div className={`App ${theme === 'dark' ? 'bg-dark text-white' : 'bg-light text-dark'}`}>
+        <div className="container py-5">
+          <h1 className="text-center mb-4">Lista de Tareas</h1>
+          {error && <p className="text-danger">{error}</p>}
+          {loading ? (
+              <p>Cargando...</p>
+          ) : (
+              <>
+                <button onClick={toggleTheme} className="btn btn-secondary mb-3">
+                  Cambiar a {theme === 'dark' ? 'Claro' : 'Oscuro'}
+                </button>
 
-            <div className="filter-buttons">
-              <button className="filter-btn all-btn" onClick={() => setFilter('all')}>Todas</button>
-              <button className="filter-btn completed-btn" onClick={() => setFilter('completed')}>Completadas</button>
-              <button className="filter-btn pending-btn" onClick={() => setFilter('pending')}>Pendientes</button>
-            </div>
+                <div className="filter-buttons">
+                  <button className="filter-btn all-btn" onClick={() => setFilter('all')}>Todas</button>
+                  <button className="filter-btn completed-btn" onClick={() => setFilter('completed')}>Completadas</button>
+                  <button className="filter-btn pending-btn" onClick={() => setFilter('pending')}>Pendientes</button>
+                </div>
 
-            <TaskForm onCreate={createTask} />
-            <TaskList tasks={filteredTasks} onReorder={handleReorder} onUpdate={updateTask} onDelete={deleteTask} />
-          </>
-        )}
+                <TaskForm onCreate={createTask} />
+                <TaskList tasks={filteredTasks} onReorder={handleReorder} onUpdate={updateTask} onDelete={deleteTask} />
+              </>
+          )}
+        </div>
       </div>
-    </div>
   );
 }
 

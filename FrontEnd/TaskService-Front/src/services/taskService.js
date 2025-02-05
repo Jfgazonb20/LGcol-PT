@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8081/tasks'; // Asegúrate de que esta URL coincida con tu backend
+const API_URL = 'http://localhost:8081/tasks'; // URL de la API
 
 // Obtener todas las tareas
 const getTasks = async () => {
